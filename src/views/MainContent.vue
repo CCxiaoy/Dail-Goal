@@ -15,7 +15,7 @@
       <p>今日暂无任务</p>
     </div>
     <div>
-      <add-task v-if="editingState"></add-task>
+      <add-task class="add-task" v-if="editingState"></add-task>
     </div>
   </div>
 </template>
@@ -57,5 +57,9 @@ export default {
 }
 .tasks-container {
   width: 280px;
+}
+.add-task {
+  position: absolute;
+  bottom: 16px;
 }
 </style>

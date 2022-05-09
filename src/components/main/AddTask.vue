@@ -1,7 +1,13 @@
 <template>
   <div class="new-task-parent">
     <div class="input-container">
-      <input ref="ipcom" type="text" v-model="taskStr" maxlength="17" />
+      <input
+        ref="ipcom"
+        type="text"
+        v-model="taskStr"
+        maxlength="17"
+        @keyup.enter="appendANewTask"
+      />
     </div>
     <div class="img-container">
       <img
@@ -43,6 +49,10 @@ export default {
     const appendANewTask = () => {
       if (tasksLength.value === 3) {
         sendAMessage("只能添加三条哦! 拜托拜托", "warning");
+        return;
+      }
+      if (taskStr.value.length < 1) {
+        sendAMessage("写点东西再添加吧", "warning");
         return;
       }
       const task = initANewTask();

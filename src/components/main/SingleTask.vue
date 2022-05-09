@@ -5,7 +5,7 @@
       <p>{{ index + 1 }}. {{ task.message }}</p>
     </div>
     <div class="input-container" v-else>
-      <input type="text" v-model="AfterEditingMsg" maxlength="17"/>
+      <input type="text" v-model="AfterEditingMsg" maxlength="17" @keyup.enter="editSingleTask"/>
     </div>
 
     <!-- 仅在编辑状态下显示 -->
@@ -62,6 +62,11 @@ export default {
     // edit task
     const editSingleTask = () => {
       const newTask = Object.assign(props.task);
+      if(AfterEditingMsg.value.length < 1) {
+        sendAMessage('点错了吧你，删除键在我旁边哦', 'warning');
+        AfterEditingMsg.value = newTask.message;
+        return;
+      }
       newTask.message = AfterEditingMsg.value;
       sendAMessage('编辑成功', 'success');
       store.commit("editSingleTask", newTask);
