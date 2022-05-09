@@ -19,6 +19,8 @@ import Task from "../../common/task/taskStructure";
 import { v4 as uuidv4 } from "uuid";
 import { useStore } from "vuex";
 import { computed, onMounted, watch } from "@vue/runtime-core";
+import { sendAMessage } from "../../common/notification/message";
+
 export default {
   setup() {
     // 获取vuex仓库
@@ -39,8 +41,13 @@ export default {
     };
     // 添加一个任务
     const appendANewTask = () => {
+      if (tasksLength.value === 3) {
+        sendAMessage("只能添加三条哦! 拜托拜托", "warning");
+        return;
+      }
       const task = initANewTask();
       store.commit("appendSingleTask", task);
+      sendAMessage("添加成功", "success");
       clearTaskStr();
     };
     // 不允许添加超过三个task
@@ -93,6 +100,10 @@ export default {
       width: 20px;
       height: 20px;
       vertical-align: middle;
+    }
+
+    img:hover {
+      cursor: pointer;
     }
   }
 }

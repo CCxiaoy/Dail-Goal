@@ -1,7 +1,7 @@
 <template>
   <div class="container-parent">
     <!-- // 根据条件判断显示哪个图标 -->
-    <div class="icon-container">
+    <div class="icon-container" v-if="false">
       <!-- // 置顶  -->
       <!-- // 实心 -->
       <img
@@ -19,7 +19,7 @@
       />
     </div>
 
-    <div class="icon-container">
+    <div class="icon-container" v-if="false">
       <!-- // 固定  -->
       <!-- // 实心 -->
       <img
@@ -57,7 +57,7 @@
       />
     </div>
 
-    <div class="icon-container">
+    <div class="icon-container" v-if="false">
       <!-- // 设置  -->
       <!-- // 实心 -->
       <img
@@ -92,6 +92,7 @@
 import { computed, onBeforeUnmount } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { closeMain } from "../../useIpc";
+import { sendAMessage } from "../../common/notification/message";
 
 export default {
   setup() {
@@ -105,14 +106,15 @@ export default {
     // modify editing state
     const toggleEditingState = () => {
       store.commit("toggleEditingState");
+      sendAMessage("切换编辑状态成功", "success");
     };
 
     onBeforeUnmount(() => {
       toggleEditingState();
       // if (editingState.value) {
-        
+
       // }
-    })
+    });
 
     // topping state
     // let toppingState = computed(() => {
@@ -154,6 +156,13 @@ export default {
       width: 16px;
       height: 16px;
       margin-left: 4px;
+    }
+
+    img:hover {
+      -webkit-app-region: no-drag;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
     }
   }
 }

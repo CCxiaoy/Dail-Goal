@@ -5,7 +5,7 @@
       <p>{{ index + 1 }}. {{ task.message }}</p>
     </div>
     <div class="input-container" v-else>
-      <input type="text" v-model="AfterEditingMsg" />
+      <input type="text" v-model="AfterEditingMsg" maxlength="17"/>
     </div>
 
     <!-- 仅在编辑状态下显示 -->
@@ -31,6 +31,8 @@
 <script>
 import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 import { useStore } from "vuex";
+import { sendAMessage } from "../../common/notification/message";
+
 export default {
   props: ["task", "index"],
   setup(props) {
@@ -61,11 +63,13 @@ export default {
     const editSingleTask = () => {
       const newTask = Object.assign(props.task);
       newTask.message = AfterEditingMsg.value;
+      sendAMessage('编辑成功', 'success');
       store.commit("editSingleTask", newTask);
     };
 
     // delete task
     const deleteSingleTask = () => {
+      sendAMessage('删除成功', 'success');
       store.commit("deleteSingleTask", props.task.id);
     };
 
@@ -97,6 +101,12 @@ export default {
         width: 12px;
         height: 12px;
         margin-left: 4px;
+      }
+
+      img:hover {
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
       }
     }
   }
